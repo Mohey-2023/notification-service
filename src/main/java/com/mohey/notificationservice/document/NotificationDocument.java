@@ -1,7 +1,9 @@
 package com.mohey.notificationservice.document;
 
+import java.util.Date;
 import java.util.Map;
 
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import lombok.AccessLevel;
@@ -21,6 +23,8 @@ public class NotificationDocument {
     private String receiverName;
     private String senderName;
     private Map<String, Object> groupInfoDto;
+    @CreatedDate
+    private Date createdTime;
 
     @Builder
     public NotificationDocument(String topic, String type, String receiverUuid,
