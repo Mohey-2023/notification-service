@@ -20,7 +20,7 @@ public class FriendListener {
         log.info("친구 신청 : " + kafkaMessage);
         friendService.insertFriendNoti(kafkaMessage);
         log.info("친구신청 DB 삽입 완료");
-        fcmNotificationService.sendToPushService(kafkaMessage);
+        fcmNotificationService.sendPersonal(kafkaMessage);
     }
 
     @KafkaListener(topics = "friend-accept")
