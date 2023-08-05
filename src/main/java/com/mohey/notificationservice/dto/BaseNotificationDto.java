@@ -9,7 +9,6 @@ public class BaseNotificationDto {
     private String topic;
     private String type;
     private String receiverUuid;
-    private String receiverToken;
     private String receiverName;
     private String senderName;
     private List<String> deviceTokenList;

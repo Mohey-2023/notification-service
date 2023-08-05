@@ -18,18 +18,16 @@ public class NotificationDocument {
     private String topic;
     private String type;
     private String receiverUuid;
-    private String receiverToken;
     private String receiverName;
     private String senderName;
     private Map<String, Object> groupInfoDto;
 
     @Builder
-    public NotificationDocument(String topic, String type, String receiverUuid, String receiverToken,
+    public NotificationDocument(String topic, String type, String receiverUuid,
                                 String receiverName, String senderName, Map<String, Object> groupInfoDto) {
         this.topic = topic;
         this.type = type;
         this.receiverUuid = receiverUuid;
-        this.receiverToken = receiverToken;
         this.receiverName = receiverName;
         this.senderName = senderName;
         this.groupInfoDto = groupInfoDto;
