@@ -18,4 +18,10 @@ public class FriendListener {
         log.info("친구 신청 : " + kafkaMessage);
         friendService.insertFriendNoti(kafkaMessage);
     }
+
+    @KafkaListener(topics = "friend-accept")
+    public void friendAccept(String kafkaMessage){
+        log.info("친구 수락 : " + kafkaMessage);
+        friendService.insertFriendNoti(kafkaMessage);
+    }
 }
