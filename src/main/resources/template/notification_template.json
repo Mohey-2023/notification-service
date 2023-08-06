@@ -1,0 +1,6 @@
+{
+  "friend-request": {
+    "title": "친구 신청",
+    "body": "{senderName}님이 친구 신청을 보내셨습니다. 수락하시겠습니까?"
+  }
+}

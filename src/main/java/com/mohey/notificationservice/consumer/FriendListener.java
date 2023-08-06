@@ -7,6 +7,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
+import java.io.IOException;
+
 @Component
 @AllArgsConstructor
 @Slf4j
@@ -16,7 +18,7 @@ public class FriendListener {
     private FCMNotificationService fcmNotificationService;
 
     @KafkaListener(topics="friend-request")
-    public void friendRequest(String kafkaMessage){
+    public void friendRequest(String kafkaMessage) throws IOException {
         log.info("친구 신청 : " + kafkaMessage);
         friendService.insertFriendNoti(kafkaMessage);
         log.info("친구신청 DB 삽입 완료");
