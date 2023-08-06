@@ -30,5 +30,9 @@
   "group-delegate":{
     "title":"방장 권한",
     "body": "{groupName}의 방장이 되셨습니다."
+  },
+  "group-confirm":{
+    "title":"모임 확정",
+    "body": "{groupName}이 확정되었습니다."
   }
 }
