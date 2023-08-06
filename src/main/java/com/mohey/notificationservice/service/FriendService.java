@@ -23,8 +23,8 @@ public class FriendService {
             NotificationDocument document = NotificationDocument.builder()
                     .topic(baseNotificationDto.getTopic())
                     .type(baseNotificationDto.getType())
-                    .receiverUuid(baseNotificationDto.getReceiverUuid())
-                    .receiverName(baseNotificationDto.getReceiverName())
+                    .receiverUuid(baseNotificationDto.getUserNotificationDetailDtoList().get(0).getReceiverUuid())
+                    .receiverName(baseNotificationDto.getUserNotificationDetailDtoList().get(0).getReceiverName())
                     .senderName(baseNotificationDto.getSenderName())
                     .build();
             log.info("document = " + document);
