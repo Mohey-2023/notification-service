@@ -31,7 +31,9 @@ public class FcmNotificationService {
             String topic = baseNotificationDto.getTopic();
             Map<String, String> template = templates.get(topic);
             String title = template.get("title");
-            String body = template.get("body").replace("{senderName}", baseNotificationDto.getSenderName());
+            String body = template.get("body")
+                    .replace("{senderName}", baseNotificationDto.getSenderName())
+                    .replace("{groupName}",baseNotificationDto.getGroupNotificationDto().getGroupName());
             for (String fcmToken : baseNotificationDto.getDeviceTokenList()) {
                 log.info("fcmToken : " + fcmToken);
                 FCMNotificationDto fcmNotificationDto =
