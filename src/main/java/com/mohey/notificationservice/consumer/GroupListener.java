@@ -64,4 +64,12 @@ public class GroupListener {
         log.info("모임 방장 권한 위임 DB 삽입 완료");
         fcmNotificationService.sendPersonal(kafkaMessage);
     }
+
+    @KafkaListener(topics="group-confirm")
+    public void groupConfirm(String kafkaMessage) throws IOException {
+        log.info("모임 확정 : " + kafkaMessage);
+        groupService.insertGroupNoti(kafkaMessage);
+        log.info("모임 확정 DB 삽입 완료");
+        fcmNotificationService.sendPersonal(kafkaMessage);
+    }
 }
