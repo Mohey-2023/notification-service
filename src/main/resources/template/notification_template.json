@@ -34,5 +34,9 @@
   "group-confirm":{
     "title":"모임 확정",
     "body": "{groupName}이 확정되었습니다."
+  },
+  "group-update":{
+    "title":"모임 수정",
+    "body": "{senderName}님이 {groupName} 일정을 수정하셨습니다."
   }
 }
