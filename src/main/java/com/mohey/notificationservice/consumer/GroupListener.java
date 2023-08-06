@@ -40,4 +40,12 @@ public class GroupListener {
         log.info("모임 초대 DB 삽입 완료");
         fcmNotificationService.sendPersonal(kafkaMessage);
     }
+
+    @KafkaListener(topics="group-join")
+    public void groupJoin(String kafkaMessage) throws IOException {
+        log.info("모임 참여 신청 : " + kafkaMessage);
+        groupService.insertGroupNoti(kafkaMessage);
+        log.info("모임 참여 신청 DB 삽입 완료");
+        fcmNotificationService.sendPersonal(kafkaMessage);
+    }
 }
