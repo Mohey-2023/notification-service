@@ -4,6 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mohey.notificationservice.document.NotificationDocument;
 import com.mohey.notificationservice.dto.BaseNotificationDto;
+import com.mohey.notificationservice.dto.UserNotificationDetailDto;
 import com.mohey.notificationservice.repository.NotificationRepo;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,16 +21,18 @@ public class GroupService {
         try{
             BaseNotificationDto baseNotificationDto = mapper.readValue(kafkaMessage,BaseNotificationDto.class);
             log.info("baseNoti : " + baseNotificationDto);
-            NotificationDocument document = NotificationDocument.builder()
-                    .topic(baseNotificationDto.getTopic())
-                    .type(baseNotificationDto.getType())
-                    .receiverUuid(baseNotificationDto.getReceiverUuid())
-                    .receiverName(baseNotificationDto.getReceiverName())
-                    .senderName(baseNotificationDto.getSenderName())
-                    .groupInfoDto(baseNotificationDto.getGroupNotificationDto())
-                    .build();
-            log.info("document = " + document);
-            notificationRepo.save(document);
+            for(UserNotificationDetailDto userNotificationDetailDto: baseNotificationDto.getUserNotificationDetailDtoList()) {
+                NotificationDocument document = NotificationDocument.builder()
+                        .topic(baseNotificationDto.getTopic())
+                        .type(baseNotificationDto.getType())
+                        .receiverUuid(userNotificationDetailDto.getReceiverUuid())
+                        .receiverName(userNotificationDetailDto.getReceiverName())
+                        .senderName(baseNotificationDto.getSenderName())
+                        .groupInfoDto(baseNotificationDto.getGroupNotificationDto())
+                        .build();
+                log.info("document = " + document);
+                notificationRepo.save(document);
+            }
         }catch (JsonProcessingException ex){
             ex.printStackTrace();
         }
