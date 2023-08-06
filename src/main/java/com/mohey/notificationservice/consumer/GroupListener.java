@@ -56,4 +56,12 @@ public class GroupListener {
         log.info("모임 방출 DB 삽입 완료");
         fcmNotificationService.sendPersonal(kafkaMessage);
     }
+
+    @KafkaListener(topics="group-delegate")
+    public void groupDelegate(String kafkaMessage) throws IOException {
+        log.info("모임 방장 권한 위임 : " + kafkaMessage);
+        groupService.insertGroupNoti(kafkaMessage);
+        log.info("모임 방장 권한 위임 DB 삽입 완료");
+        fcmNotificationService.sendPersonal(kafkaMessage);
+    }
 }
