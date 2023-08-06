@@ -6,5 +6,29 @@
   "friend-accept": {
     "title": "친구 수락",
     "body": "{senderName}님이 친구 신청을 수락하셨습니다."
+  },
+  "group-affirm":{
+    "title":"모임 참여",
+    "body": "{groupName}에 참여하였습니다."
+  },
+  "group-reject":{
+    "title":"모임 거절",
+    "body": "{groupName}에 거절당하셨습니다."
+  },
+  "group-invite":{
+    "title":"모임 초대",
+    "body": "{senderName}님이 {groupName}에 초대하셨습니다."
+  },
+  "group-join":{
+    "title":"모임 참여 신청",
+    "body": "{senderName}님이 {groupName}에 참여 신청하였습니다."
+  },
+  "group-kick":{
+    "title":"모임 방출",
+    "body": "{groupName}에서 제외되셨습니다."
+  },
+  "group-delegate":{
+    "title":"방장 권한",
+    "body": "{groupName}의 방장이 되셨습니다."
   }
 }
