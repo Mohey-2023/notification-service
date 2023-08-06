@@ -32,4 +32,12 @@ public class GroupListener {
         log.info("모임 거절 DB 삽입 완료");
         fcmNotificationService.sendPersonal(kafkaMessage);
     }
+
+    @KafkaListener(topics="group-invite")
+    public void groupInvite(String kafkaMessage) throws IOException {
+        log.info("모임 초대 : " + kafkaMessage);
+        groupService.insertGroupNoti(kafkaMessage);
+        log.info("모임 초대 DB 삽입 완료");
+        fcmNotificationService.sendPersonal(kafkaMessage);
+    }
 }
