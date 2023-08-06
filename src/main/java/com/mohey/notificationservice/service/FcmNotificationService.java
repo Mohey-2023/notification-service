@@ -5,6 +5,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mohey.notificationservice.dto.BaseNotificationDto;
 import com.mohey.notificationservice.dto.FCMNotificationDto;
+import com.mohey.notificationservice.dto.UserNotificationDetailDto;
 import com.mohey.notificationservice.producer.PersonalProducer;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -32,14 +33,18 @@ public class FcmNotificationService {
             Map<String, String> template = templates.get(topic);
             String title = template.get("title");
             String body = template.get("body")
-                    .replace("{senderName}", baseNotificationDto.getSenderName())
-                    .replace("{groupName}",baseNotificationDto.getGroupNotificationDto().getGroupName());
-            for (String fcmToken : baseNotificationDto.getDeviceTokenList()) {
-                log.info("fcmToken : " + fcmToken);
-                FCMNotificationDto fcmNotificationDto =
-                        new FCMNotificationDto(fcmToken,title, body);
-                log.info("fcmNotiDto : " + fcmNotificationDto);
-                personalProducer.send("personal-push", fcmNotificationDto);
+                    .replace("{senderName}", baseNotificationDto.getSenderName());
+            if(baseNotificationDto.getGroupNotificationDto() != null){
+                 body = body.replace("{groupName}",baseNotificationDto.getGroupNotificationDto().getGroupName());
+            }
+            for(UserNotificationDetailDto userNotificationDetailDto: baseNotificationDto.getUserNotificationDetailDtoList()){
+                for (String fcmToken : userNotificationDetailDto.getDeviceTokenList()) {
+                    log.info("fcmToken : " + fcmToken);
+                    FCMNotificationDto fcmNotificationDto =
+                            new FCMNotificationDto(fcmToken,title, body);
+                    log.info("fcmNotiDto : " + fcmNotificationDto);
+                    personalProducer.send("personal-push", fcmNotificationDto);
+                }
             }
         }catch (JsonProcessingException ex){
             ex.printStackTrace();
