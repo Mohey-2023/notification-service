@@ -19,9 +19,17 @@ public class GroupListener {
 
     @KafkaListener(topics="group-affirm")
     public void groupAffirm(String kafkaMessage) throws IOException {
-        log.info("그룹 참여 : " + kafkaMessage);
+        log.info("모임 참여 : " + kafkaMessage);
         groupService.insertGroupNoti(kafkaMessage);
-        log.info("그룹 참여 DB 삽입 완료");
+        log.info("모임 참여 DB 삽입 완료");
+        fcmNotificationService.sendPersonal(kafkaMessage);
+    }
+
+    @KafkaListener(topics="group-reject")
+    public void groupReject(String kafkaMessage) throws IOException {
+        log.info("모임 거절 : " + kafkaMessage);
+        groupService.insertGroupNoti(kafkaMessage);
+        log.info("모임 거절 DB 삽입 완료");
         fcmNotificationService.sendPersonal(kafkaMessage);
     }
 }
