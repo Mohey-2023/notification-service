@@ -1,6 +1,6 @@
 package com.mohey.notificationservice.consumer;
 
-import com.mohey.notificationservice.service.FCMNotificationService;
+import com.mohey.notificationservice.service.FcmNotificationService;
 import com.mohey.notificationservice.service.FriendService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -15,7 +15,7 @@ import java.io.IOException;
 public class FriendListener {
 
     private FriendService friendService;
-    private FCMNotificationService fcmNotificationService;
+    private FcmNotificationService fcmNotificationService;
 
     @KafkaListener(topics="friend-request")
     public void friendRequest(String kafkaMessage) throws IOException {
@@ -26,8 +26,10 @@ public class FriendListener {
     }
 
     @KafkaListener(topics = "friend-accept")
-    public void friendAccept(String kafkaMessage){
+    public void friendAccept(String kafkaMessage) throws IOException {
         log.info("친구 수락 : " + kafkaMessage);
         friendService.insertFriendNoti(kafkaMessage);
+        log.info("친구수락 DB 삽입 완료");
+        fcmNotificationService.sendPersonal(kafkaMessage);
     }
 }

@@ -2,5 +2,9 @@
   "friend-request": {
     "title": "친구 신청",
     "body": "{senderName}님이 친구 신청을 보내셨습니다. 수락하시겠습니까?"
+  },
+  "friend-accept": {
+    "title": "친구 수락",
+    "body": "{senderName}님이 친구 신청을 수락하셨습니다."
   }
 }

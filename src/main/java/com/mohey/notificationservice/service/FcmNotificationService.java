@@ -17,7 +17,7 @@ import java.util.Map;
 @Service
 @AllArgsConstructor
 @Slf4j
-public class FCMNotificationService{
+public class FcmNotificationService {
 
     private PersonalProducer personalProducer;
     private  ObjectMapper mapper;
@@ -48,4 +48,5 @@ public class FCMNotificationService{
         ClassPathResource resource = new ClassPathResource("template/notification_template.json");
         return mapper.readValue(resource.getInputStream(), new TypeReference<Map<String, Map<String, String>>>() {});
     }
+
 }
