@@ -72,4 +72,12 @@ public class GroupListener {
         log.info("모임 확정 DB 삽입 완료");
         fcmNotificationService.sendPersonal(kafkaMessage);
     }
+
+    @KafkaListener(topics="group-update")
+    public void groupUpdate(String kafkaMessage) throws IOException {
+        log.info("모임 수정 : " + kafkaMessage);
+        groupService.insertGroupNoti(kafkaMessage);
+        log.info("모임 수정 DB 삽입 완료");
+        fcmNotificationService.sendPersonal(kafkaMessage);
+    }
 }
