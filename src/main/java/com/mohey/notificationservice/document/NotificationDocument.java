@@ -1,8 +1,8 @@
 package com.mohey.notificationservice.document;
 
 import java.util.Date;
-import java.util.Map;
 
+import com.mohey.notificationservice.dto.GroupNotificationDto;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -22,13 +22,13 @@ public class NotificationDocument {
     private String receiverUuid;
     private String receiverName;
     private String senderName;
-    private Map<String, Object> groupInfoDto;
+    private GroupNotificationDto groupInfoDto;
     @CreatedDate
     private Date createdTime;
 
     @Builder
     public NotificationDocument(String topic, String type, String receiverUuid,
-                                String receiverName, String senderName, Map<String, Object> groupInfoDto) {
+                                String receiverName, String senderName, GroupNotificationDto groupInfoDto) {
         this.topic = topic;
         this.type = type;
         this.receiverUuid = receiverUuid;
