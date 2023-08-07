@@ -3,8 +3,8 @@ package com.mohey.notificationservice.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mohey.notificationservice.document.NotificationDocument;
-import com.mohey.notificationservice.dto.BaseNotificationDto;
-import com.mohey.notificationservice.dto.UserNotificationDetailDto;
+import com.mohey.notificationservice.dto.GroupNotificationDto;
+import com.mohey.notificationservice.dto.MemberNotificationDetailDto;
 import com.mohey.notificationservice.repository.NotificationRepo;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -19,16 +19,17 @@ public class GroupService {
     public void insertGroupNoti(String kafkaMessage){
         ObjectMapper mapper = new ObjectMapper();
         try{
-            BaseNotificationDto baseNotificationDto = mapper.readValue(kafkaMessage,BaseNotificationDto.class);
-            log.info("baseNoti : " + baseNotificationDto);
-            for(UserNotificationDetailDto userNotificationDetailDto: baseNotificationDto.getUserNotificationDetailDtoList()) {
+            GroupNotificationDto groupNotificationDto = mapper.readValue(kafkaMessage,GroupNotificationDto.class);
+            log.info("group noti : " + groupNotificationDto);
+            for(MemberNotificationDetailDto memberNotificationDetailDto: groupNotificationDto.getMemberNotificationDetailDtoList()) {
                 NotificationDocument document = NotificationDocument.builder()
-                        .topic(baseNotificationDto.getTopic())
-                        .type(baseNotificationDto.getType())
-                        .receiverUuid(userNotificationDetailDto.getReceiverUuid())
-                        .receiverName(userNotificationDetailDto.getReceiverName())
-                        .senderName(baseNotificationDto.getSenderName())
-                        .groupInfoDto(baseNotificationDto.getGroupNotificationDto())
+                        .topic(groupNotificationDto.getTopic())
+                        .type(groupNotificationDto.getType())
+                        .senderUuid(groupNotificationDto.getSenderUuid())
+                        .senderName(groupNotificationDto.getSenderName())
+                        .receiverUuid(memberNotificationDetailDto.getReceiverUuid())
+                        .receiverName(memberNotificationDetailDto.getReceiverName())
+                        .groupInfoDto(groupNotificationDto.getGroupNotificationDetailDto())
                         .build();
                 log.info("document = " + document);
                 notificationRepo.save(document);
