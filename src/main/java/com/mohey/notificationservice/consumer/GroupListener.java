@@ -22,7 +22,7 @@ public class GroupListener {
         log.info("모임 참여 : " + kafkaMessage);
         groupService.insertGroupNoti(kafkaMessage);
         log.info("모임 참여 DB 삽입 완료");
-        fcmNotificationService.sendPersonal(kafkaMessage);
+        fcmNotificationService.sendGroupPersonal(kafkaMessage);
     }
 
     @KafkaListener(topics="group-reject")
@@ -30,7 +30,7 @@ public class GroupListener {
         log.info("모임 거절 : " + kafkaMessage);
         groupService.insertGroupNoti(kafkaMessage);
         log.info("모임 거절 DB 삽입 완료");
-        fcmNotificationService.sendPersonal(kafkaMessage);
+        fcmNotificationService.sendGroupPersonal(kafkaMessage);
     }
 
     @KafkaListener(topics="group-invite")
@@ -38,7 +38,7 @@ public class GroupListener {
         log.info("모임 초대 : " + kafkaMessage);
         groupService.insertGroupNoti(kafkaMessage);
         log.info("모임 초대 DB 삽입 완료");
-        fcmNotificationService.sendPersonal(kafkaMessage);
+        fcmNotificationService.sendGroupPersonal(kafkaMessage);
     }
 
     @KafkaListener(topics="group-join")
@@ -46,7 +46,7 @@ public class GroupListener {
         log.info("모임 참여 신청 : " + kafkaMessage);
         groupService.insertGroupNoti(kafkaMessage);
         log.info("모임 참여 신청 DB 삽입 완료");
-        fcmNotificationService.sendPersonal(kafkaMessage);
+        fcmNotificationService.sendGroupPersonal(kafkaMessage);
     }
 
     @KafkaListener(topics="group-kick")
@@ -54,7 +54,7 @@ public class GroupListener {
         log.info("모임 방출 : " + kafkaMessage);
         groupService.insertGroupNoti(kafkaMessage);
         log.info("모임 방출 DB 삽입 완료");
-        fcmNotificationService.sendPersonal(kafkaMessage);
+        fcmNotificationService.sendGroupPersonal(kafkaMessage);
     }
 
     @KafkaListener(topics="group-delegate")
@@ -62,7 +62,7 @@ public class GroupListener {
         log.info("모임 방장 권한 위임 : " + kafkaMessage);
         groupService.insertGroupNoti(kafkaMessage);
         log.info("모임 방장 권한 위임 DB 삽입 완료");
-        fcmNotificationService.sendPersonal(kafkaMessage);
+        fcmNotificationService.sendGroupPersonal(kafkaMessage);
     }
 
     @KafkaListener(topics="group-confirm")
@@ -70,7 +70,7 @@ public class GroupListener {
         log.info("모임 확정 : " + kafkaMessage);
         groupService.insertGroupNoti(kafkaMessage);
         log.info("모임 확정 DB 삽입 완료");
-        fcmNotificationService.sendPersonal(kafkaMessage);
+        fcmNotificationService.sendGroupPersonal(kafkaMessage);
     }
 
     @KafkaListener(topics="group-update")
@@ -78,6 +78,6 @@ public class GroupListener {
         log.info("모임 수정 : " + kafkaMessage);
         groupService.insertGroupNoti(kafkaMessage);
         log.info("모임 수정 DB 삽입 완료");
-        fcmNotificationService.sendPersonal(kafkaMessage);
+        fcmNotificationService.sendGroupPersonal(kafkaMessage);
     }
 }
