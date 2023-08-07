@@ -3,7 +3,7 @@ package com.mohey.notificationservice.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.mohey.notificationservice.document.NotificationDocument;
-import com.mohey.notificationservice.dto.BaseNotificationDto;
+import com.mohey.notificationservice.dto.MemberNotificationDto;
 import com.mohey.notificationservice.repository.NotificationRepo;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,14 +18,15 @@ public class FriendService {
     public void insertFriendNoti(String kafkaMessage){
         ObjectMapper mapper = new ObjectMapper();
         try{
-            BaseNotificationDto baseNotificationDto = mapper.readValue(kafkaMessage,BaseNotificationDto.class);
-            log.info("baseNoti : " + baseNotificationDto);
+            MemberNotificationDto memberNotificationDto = mapper.readValue(kafkaMessage, MemberNotificationDto.class);
+            log.info("user Noti : " + memberNotificationDto);
             NotificationDocument document = NotificationDocument.builder()
-                    .topic(baseNotificationDto.getTopic())
-                    .type(baseNotificationDto.getType())
-                    .receiverUuid(baseNotificationDto.getUserNotificationDetailDtoList().get(0).getReceiverUuid())
-                    .receiverName(baseNotificationDto.getUserNotificationDetailDtoList().get(0).getReceiverName())
-                    .senderName(baseNotificationDto.getSenderName())
+                    .topic(memberNotificationDto.getTopic())
+                    .type(memberNotificationDto.getType())
+                    .senderUuid(memberNotificationDto.getSenderUuid())
+                    .senderName(memberNotificationDto.getSenderName())
+                    .receiverUuid(memberNotificationDto.getReceiverUuid())
+                    .receiverName(memberNotificationDto.getReceiverName())
                     .build();
             log.info("document = " + document);
             notificationRepo.save(document);
