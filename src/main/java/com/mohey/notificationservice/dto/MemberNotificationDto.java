@@ -5,10 +5,12 @@ import lombok.Data;
 import java.util.List;
 
 @Data
-public class BaseNotificationDto {
+public class MemberNotificationDto {
     private String topic;
     private String type;
+    private String senderUuid;
     private String senderName;
-    private List<UserNotificationDetailDto> userNotificationDetailDtoList;
-    private GroupNotificationDto groupNotificationDto;
+    private String receiverUuid;
+    private String receiverName;
+    private List<String> deviceTokenList;
 }
