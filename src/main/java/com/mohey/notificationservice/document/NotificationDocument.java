@@ -2,7 +2,7 @@ package com.mohey.notificationservice.document;
 
 import java.util.Date;
 
-import com.mohey.notificationservice.dto.GroupNotificationDto;
+import com.mohey.notificationservice.dto.GroupNotificationDetailDto;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -19,21 +19,23 @@ import lombok.ToString;
 public class NotificationDocument {
     private String topic;
     private String type;
+    private String senderUuid;
+    private String senderName;
     private String receiverUuid;
     private String receiverName;
-    private String senderName;
-    private GroupNotificationDto groupInfoDto;
+    private GroupNotificationDetailDto groupInfoDto;
     @CreatedDate
     private Date createdTime;
 
     @Builder
-    public NotificationDocument(String topic, String type, String receiverUuid,
-                                String receiverName, String senderName, GroupNotificationDto groupInfoDto) {
+    public NotificationDocument(String topic, String type, String senderUuid, String senderName, String receiverUuid, String receiverName, GroupNotificationDetailDto groupInfoDto, Date createdTime) {
         this.topic = topic;
         this.type = type;
+        this.senderUuid = senderUuid;
+        this.senderName = senderName;
         this.receiverUuid = receiverUuid;
         this.receiverName = receiverName;
-        this.senderName = senderName;
         this.groupInfoDto = groupInfoDto;
+        this.createdTime = createdTime;
     }
 }
