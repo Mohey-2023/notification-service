@@ -53,7 +53,7 @@ public class FcmNotificationService {
         Map<String, Map<String, String>> templates = loadTemplates(mapper);
         try{
             GroupNotificationDto groupNotificationDto = mapper.readValue(kafkaMessage, GroupNotificationDto.class);
-            log.info("baseNotificationDto = " + groupNotificationDto);
+            log.info("groupNotificationDto = " + groupNotificationDto);
             String topic = groupNotificationDto.getTopic();
             Map<String, String> template = templates.get(topic);
             String title = template.get("title");
