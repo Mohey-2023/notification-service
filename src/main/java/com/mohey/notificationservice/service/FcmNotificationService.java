@@ -3,10 +3,8 @@ package com.mohey.notificationservice.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mohey.notificationservice.dto.GroupNotificationDto;
-import com.mohey.notificationservice.dto.FCMNotificationDto;
-import com.mohey.notificationservice.dto.MemberNotificationDetailDto;
-import com.mohey.notificationservice.dto.MemberNotificationDto;
+import com.mohey.notificationservice.document.NoticeDocument;
+import com.mohey.notificationservice.dto.*;
 import com.mohey.notificationservice.producer.PersonalProducer;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -76,9 +74,24 @@ public class FcmNotificationService {
         }
     }
 
+    public void sendUrgentNotice(String kafkaMessage) throws IOException{
+        try {
+            NoticeDto noticeDto = mapper.readValue(kafkaMessage, NoticeDto.class);
+            log.info("notice dto: " + noticeDto);
+            FCMNoticeDto fcmNoticeDto = FCMNoticeDto.builder()
+                    .topic("urgent-notice")
+                    .title(noticeDto.getNoticeDetailDto().getTitle())
+                    .body(noticeDto.getNoticeDetailDto().getBody())
+                    .build();
+            log.info("fcmNoticeDto : " + fcmNoticeDto);
+            personalProducer.send("all-push", fcmNoticeDto);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     private Map<String, Map<String, String>> loadTemplates(ObjectMapper mapper) throws IOException, IOException {
         ClassPathResource resource = new ClassPathResource("template/notification_template.json");
         return mapper.readValue(resource.getInputStream(), new TypeReference<Map<String, Map<String, String>>>() {});
     }
-
 }
