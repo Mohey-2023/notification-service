@@ -65,6 +65,11 @@ public class GroupListener {
         fcmNotificationService.sendGroupPersonal(kafkaMessage);
     }
 
+    @KafkaListener(topics = "group-remind-leader")
+    public void groupRemindLeader(String kafkaMessage) throws IOException{
+        log.info("모임 1시간 10분 전 방장에게 확인 알림 : " + kafkaMessage);
+        fcmNotificationService.sendGroupPersonal(kafkaMessage);
+    }
     @KafkaListener(topics="group-confirm")
     public void groupConfirm(String kafkaMessage) throws IOException {
         log.info("모임 확정 : " + kafkaMessage);
@@ -80,4 +85,11 @@ public class GroupListener {
         log.info("모임 수정 DB 삽입 완료");
         fcmNotificationService.sendGroupPersonal(kafkaMessage);
     }
+
+    @KafkaListener(topics = "group-remind")
+    public void groupRemind(String kafkaMessage) throws IOException{
+        log.info("모임 30분 전 알림 : " + kafkaMessage);
+        fcmNotificationService.sendGroupPersonal(kafkaMessage);
+    }
+
 }
