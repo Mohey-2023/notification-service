@@ -31,6 +31,10 @@
     "title":"방장 권한",
     "body": "{groupName}의 방장이 되셨습니다."
   },
+  "group-remind-leader": {
+    "title":"방장 확정 알림",
+    "body": "10분 안에 확정 버튼을 누르지 않으면, {groupName}이 사라집니다."
+  },
   "group-confirm":{
     "title":"모임 확정",
     "body": "{groupName}이 확정되었습니다."
@@ -38,5 +42,9 @@
   "group-update":{
     "title":"모임 수정",
     "body": "{groupName} 일정이 수정되었습니다."
+  },
+  "group-remind": {
+    "title": "모임 시작 30분 전",
+    "body": "{groupName}이 30분 후에 시작됩니다."
   }
 }
