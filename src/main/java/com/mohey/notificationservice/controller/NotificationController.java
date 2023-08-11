@@ -25,7 +25,7 @@ public class NotificationController {
         this.notificationService = notificationService;
     }
 
-    @GetMapping("/{memberUuid}")
+    @GetMapping(value="/{memberUuid}",produces = "application/json;charset=UTF-8")
     public NotificationsResponseDto getNotifications(@PathVariable("memberUuid") String memberUuid){
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DAY_OF_MONTH, -30);
