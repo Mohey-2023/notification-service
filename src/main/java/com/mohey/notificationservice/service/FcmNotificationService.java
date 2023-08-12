@@ -38,7 +38,7 @@ public class FcmNotificationService {
             for (String fcmToken : memberNotificationDto.getDeviceTokenList()) {
                 log.info("fcmToken : " + fcmToken);
                 FCMNotificationDto fcmNotificationDto =
-                        new FCMNotificationDto(fcmToken,title, body);
+                        new FCMNotificationDto(fcmToken,topic,title, body);
                 log.info("fcmNotiDto : " + fcmNotificationDto);
                 personalProducer.send("personal-push", fcmNotificationDto);
             }
@@ -64,7 +64,7 @@ public class FcmNotificationService {
                 for (String fcmToken : memberNotificationDetailDto.getDeviceTokenList()) {
                     log.info("fcmToken : " + fcmToken);
                     FCMNotificationDto fcmNotificationDto =
-                            new FCMNotificationDto(fcmToken,title, body);
+                            new FCMNotificationDto(fcmToken, topic, title, body);
                     log.info("fcmNotiDto : " + fcmNotificationDto);
                     personalProducer.send("personal-push", fcmNotificationDto);
                 }
