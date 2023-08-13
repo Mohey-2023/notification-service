@@ -7,6 +7,7 @@ import com.mohey.notificationservice.dto.GroupNotificationResponseDto;
 import com.mohey.notificationservice.dto.NoticeResponseDto;
 import com.mohey.notificationservice.repository.NoticeRepo;
 import com.mohey.notificationservice.repository.NotificationRepo;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +16,7 @@ import java.util.Date;
 import java.util.List;
 
 @Service
+@Slf4j
 public class NotificationService {
     private final NoticeRepo noticeRepo;
     private final NotificationRepo notificationRepo;
@@ -51,6 +53,7 @@ public class NotificationService {
             );
             friendNotificationResponseDtoList.add(friendNotificationResponseDto);
         }
+        log.info("list : " + friendNotificationResponseDtoList);
         return friendNotificationResponseDtoList;
     }
 
