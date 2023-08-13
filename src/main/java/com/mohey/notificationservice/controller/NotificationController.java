@@ -4,6 +4,8 @@ import com.mohey.notificationservice.dto.*;
 import com.mohey.notificationservice.service.NotificationRedisService;
 import com.mohey.notificationservice.service.NotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,19 +28,21 @@ public class NotificationController {
     }
 
     @GetMapping(value="/{memberUuid}",produces = "application/json;charset=UTF-8")
-    public NotificationsResponseDto getNotifications(@PathVariable("memberUuid") String memberUuid){
+    public ResponseEntity<NotificationsResponseDto> getNotifications(@PathVariable("memberUuid") String memberUuid){
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DAY_OF_MONTH, -30);
         List<NoticeResponseDto> notices = notificationService.getRecentNotices(calendar.getTime());
         List<FriendNotificationResponseDto> friendNotifications = notificationService.getRecentFriendNotifications(memberUuid, calendar.getTime());
         List<GroupNotificationResponseDto> groupNotifications = notificationService.getRecentGroupNotifications(memberUuid,calendar.getTime());
         notificationRedisService.setReadStatus(memberUuid);
-        return new NotificationsResponseDto(notices, friendNotifications,groupNotifications);
+        NotificationsResponseDto notificationsResponseDto = new NotificationsResponseDto(notices, friendNotifications,groupNotifications);
+        return new ResponseEntity<>(notificationsResponseDto, HttpStatus.OK);
     }
 
     @GetMapping(value="/status/{memberUuid}",produces = "application/json;charset=UTF-8")
-    public NotificationStatusDto checkNotificationStatus(@PathVariable("memberUuid") String memberUuid){
+    public ResponseEntity<NotificationStatusDto> checkNotificationStatus(@PathVariable("memberUuid") String memberUuid){
         boolean hasUnreadNotifications = notificationRedisService.hasUnreadNotifications(memberUuid);
-        return new NotificationStatusDto(hasUnreadNotifications);
+        NotificationStatusDto notificationStatusDto = new NotificationStatusDto(hasUnreadNotifications);
+        return new ResponseEntity<>(notificationStatusDto,HttpStatus.OK);
     }
 }
