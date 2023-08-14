@@ -9,14 +9,19 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+
 @Service
 @AllArgsConstructor
 @Slf4j
 public class FriendService {
+    private final int timeDiff = 9 * 60 * 60 * 1000;
     private NotificationRepo notificationRepo;
 
     public void insertFriendNoti(String kafkaMessage){
         ObjectMapper mapper = new ObjectMapper();
+        Date currentTime = new Date(new Date().getTime() + timeDiff);
+        log.info("currentTime : " + currentTime);
         try{
             MemberNotificationDto memberNotificationDto = mapper.readValue(kafkaMessage, MemberNotificationDto.class);
             log.info("user Noti : " + memberNotificationDto);
@@ -27,6 +32,7 @@ public class FriendService {
                     .senderName(memberNotificationDto.getSenderName())
                     .receiverUuid(memberNotificationDto.getReceiverUuid())
                     .receiverName(memberNotificationDto.getReceiverName())
+                    .createdTime(currentTime)
                     .build();
             log.info("document = " + document);
             notificationRepo.save(document);
@@ -34,5 +40,4 @@ public class FriendService {
             ex.printStackTrace();
         }
     }
-
 }

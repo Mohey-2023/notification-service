@@ -10,14 +10,19 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+
 @Service
 @AllArgsConstructor
 @Slf4j
 public class GroupService {
+    private final int timeDiff = 9 * 60 * 60 * 1000;
     private NotificationRepo notificationRepo;
 
     public void insertGroupNoti(String kafkaMessage){
         ObjectMapper mapper = new ObjectMapper();
+        Date currentTime = new Date(new Date().getTime() + timeDiff);
+        log.info("currentTime : " + currentTime);
         try{
             GroupNotificationDto groupNotificationDto = mapper.readValue(kafkaMessage,GroupNotificationDto.class);
             log.info("group noti : " + groupNotificationDto);
@@ -38,5 +43,4 @@ public class GroupService {
             ex.printStackTrace();
         }
     }
-
 }
