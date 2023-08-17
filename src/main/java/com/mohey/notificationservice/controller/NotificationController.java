@@ -31,9 +31,10 @@ public class NotificationController {
 
     @GetMapping(value="/{memberUuid}",produces = "application/json;charset=UTF-8")
     public ResponseEntity<NotificationsResponseDto> getNotifications(@PathVariable("memberUuid") String memberUuid){
+        log.info("memberUuid : " + memberUuid);
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DAY_OF_MONTH, -30);
-        log.info("day : " + calendar);
+        log.info("day : " + calendar.getTime());
         List<NoticeResponseDto> notices = notificationService.getRecentNotices(calendar.getTime());
         List<FriendNotificationResponseDto> friendNotifications = notificationService.getRecentFriendNotifications(memberUuid, calendar.getTime());
         List<GroupNotificationResponseDto> groupNotifications = notificationService.getRecentGroupNotifications(memberUuid,calendar.getTime());
