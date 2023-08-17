@@ -3,6 +3,7 @@ package com.mohey.notificationservice.controller;
 import com.mohey.notificationservice.dto.*;
 import com.mohey.notificationservice.service.NotificationRedisService;
 import com.mohey.notificationservice.service.NotificationService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/notifications")
+@Slf4j
 public class NotificationController {
 
     private final NotificationService notificationService;
@@ -31,9 +33,13 @@ public class NotificationController {
     public ResponseEntity<NotificationsResponseDto> getNotifications(@PathVariable("memberUuid") String memberUuid){
         Calendar calendar = Calendar.getInstance();
         calendar.add(Calendar.DAY_OF_MONTH, -30);
+        log.info("day : " + calendar);
         List<NoticeResponseDto> notices = notificationService.getRecentNotices(calendar.getTime());
         List<FriendNotificationResponseDto> friendNotifications = notificationService.getRecentFriendNotifications(memberUuid, calendar.getTime());
         List<GroupNotificationResponseDto> groupNotifications = notificationService.getRecentGroupNotifications(memberUuid,calendar.getTime());
+        log.info("notices : " + notices);
+        log.info("frienNotifications : " +friendNotifications);
+        log.info("groupNotifications : " + groupNotifications);
         notificationRedisService.setReadStatus(memberUuid);
         NotificationsResponseDto notificationsResponseDto = new NotificationsResponseDto(notices, friendNotifications,groupNotifications);
         return new ResponseEntity<>(notificationsResponseDto, HttpStatus.OK);
