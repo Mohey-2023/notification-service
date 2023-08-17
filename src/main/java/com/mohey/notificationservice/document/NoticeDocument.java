@@ -16,8 +16,9 @@ public class NoticeDocument {
     private Date createdTime;
 
     @Builder
-    public NoticeDocument(String type, NoticeDetailDto noticeDetailDto) {
+    public NoticeDocument(String type, NoticeDetailDto noticeDetailDto,Date createdTime) {
         this.type = type;
         this.noticeDetailDto = noticeDetailDto;
+        this.createdTime = createdTime;
     }
 }

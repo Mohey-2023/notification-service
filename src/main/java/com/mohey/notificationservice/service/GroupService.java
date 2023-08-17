@@ -35,6 +35,7 @@ public class GroupService {
                         .receiverUuid(memberNotificationDetailDto.getReceiverUuid())
                         .receiverName(memberNotificationDetailDto.getReceiverName())
                         .groupInfoDto(groupNotificationDto.getGroupNotificationDetailDto())
+                        .createdTime(currentTime)
                         .build();
                 log.info("document = " + document);
                 notificationRepo.save(document);

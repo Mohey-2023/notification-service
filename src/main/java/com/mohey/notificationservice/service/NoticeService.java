@@ -28,6 +28,7 @@ public class NoticeService {
             NoticeDocument document = NoticeDocument.builder()
                     .type(noticeDto.getType())
                     .noticeDetailDto(noticeDto.getNoticeDetailDto())
+                    .createdTime(currentTime)
                     .build();
             log.info("document : " + document);
             noticeRepo.save(document);
